@@ -92,6 +92,16 @@ class Client extends \jsonRPCClient
         return $this->campaign;
     }
 
+    public function sendNewsletter($newsletter) {
+      $n = array(
+        "campaign" => $this->campaign["id"],
+        "subject"     => $newsletter["subject"],
+        "contents"    => array('plain' => $newsletter["contents"]),
+        "get_contacts" => array('name' => array( 'CONTAINS' => '%')),
+      );
+      return $this->send_newsletter($n);
+    }
+
     public function __call($method, $params = array())
     {
         array_unshift($params, $this->key);
